@@ -45,3 +45,10 @@ def list_execution_steps(execution_id: int):
     with Session(engine) as session:
         steps = session.exec(select(StepExecution).where(StepExecution.job_execution_id == execution_id)).all()
         return steps
+
+@app.get("/instances/{instance_id}/parameters")
+def get_job_parameters(instance_id: int):
+    with Session(engine) as session:
+        from app.models import JobParameter
+        params = session.exec(select(JobParameter).where(JobParameter.job_instance_id == instance_id)).all()
+        return params
